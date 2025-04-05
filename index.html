@@ -4,9 +4,9 @@
 
 <head>
 
-  <meta charset="BIG5">
+  <meta charset="UTF-8">
 
-  <title>³ø­F¤pÀ°¤â</title>
+  <title>å ±èƒšå°å¹«æ‰‹</title>
 
   <style>
 
@@ -16,7 +16,7 @@
 
       padding: 30px;
 
-      font-size: 18px; /* ²Î¤@¤å¦r¤j¤p */
+      font-size: 18px; /* çµ±ä¸€æ–‡å­—å¤§å° */
 
     }
 
@@ -44,7 +44,7 @@
 
     .reset-button {
 
-      background-color: #e0e0e0; /* ²L¦Ç©³ */
+      background-color: #e0e0e0; /* æ·ºç°åº• */
 
     }
 
@@ -178,7 +178,7 @@
 
       align-items: center;
 
-      gap: 12px; /* ºò¶K«ö¶s¶ZÂ÷ */
+      gap: 12px; /* ç·Šè²¼æŒ‰éˆ•è·é›¢ */
 
       margin-top: 20px;
 
@@ -192,13 +192,13 @@
 
 
 
-  <h2 style="font-size: 22px; font-weight: bold;">¤µ¤Ñ¤é´Á¡G<span id="today-date"></span></h2>
+  <h2 style="font-size: 22px; font-weight: bold;">ä»Šå¤©æ—¥æœŸï¼š<span id="today-date"></span></h2>
 
 
 
   <div class="line">
 
-    <span class="label">¤µ¤Ñ¬O</span>
+    <span class="label">ä»Šå¤©æ˜¯</span>
 
     <button class="day-button" onclick="selectDay(3)">Day3</button>
 
@@ -218,9 +218,9 @@
 
   <div class="button-row">
 
-    <button class="generate-button" onclick="generateTemplate()">²£¥X¼ÒªO</button>
+    <button class="generate-button" onclick="generateTemplate()">ç”¢å‡ºæ¨¡æ¿</button>
 
-    <button class="reset-button" onclick="confirmReset()">²MªÅªí³æ</button>
+    <button class="reset-button" onclick="confirmReset()">æ¸…ç©ºè¡¨å–®</button>
 
   </div>
 
@@ -230,7 +230,7 @@
 
 
 
-  <button id="copy-button" class="copy-button" onclick="copyTemplate()">½Æ»s¼ÒªO</button>
+  <button id="copy-button" class="copy-button" onclick="copyTemplate()">è¤‡è£½æ¨¡æ¿</button>
 
 
 
@@ -256,7 +256,7 @@
 
   function confirmReset() {
 
-    const result = confirm("½T»{²M°£ªí³æ¡H");
+    const result = confirm("ç¢ºèªæ¸…é™¤è¡¨å–®ï¼Ÿ");
 
     if (result) resetForm();
 
@@ -304,7 +304,7 @@
 
         <div class="line">
 
-          <span class="label">¤Á¤ù</span>
+          <span class="label">åˆ‡ç‰‡</span>
 
           <button class="plus-minus-button" onclick="adjustCount('slice-count', -1)">-</button>
 
@@ -312,7 +312,7 @@
 
           <button class="plus-minus-button" onclick="adjustCount('slice-count', 1)">+</button>
 
-          <span class="label">Áû</span>
+          <span class="label">é¡†</span>
 
         </div>`;
 
@@ -324,7 +324,7 @@
 
       <div class="line">
 
-        <span class="label">§N­á</span>
+        <span class="label">å†·å‡</span>
 
         <button class="plus-minus-button" onclick="adjustCount('embryo-count', -1)">-</button>
 
@@ -332,7 +332,7 @@
 
         <button class="plus-minus-button" onclick="adjustCount('embryo-count', 1)">+</button>
 
-        <span class="label">Áû­F­L</span>
+        <span class="label">é¡†èƒšèƒ</span>
 
       </div>`;
 
@@ -344,11 +344,11 @@
 
         <div class="yes-no-row">
 
-          <span class="label">¬O§_ÁÙ¦³­F­L­nÆ[¹î</span>
+          <span class="label">æ˜¯å¦é‚„æœ‰èƒšèƒè¦è§€å¯Ÿ</span>
 
-          <button class="yes-no-button" onclick="toggleObservation('no')">§_</button>
+          <button class="yes-no-button" onclick="toggleObservation('no')">å¦</button>
 
-          <button class="yes-no-button" onclick="toggleObservation('yes')">¬O</button>
+          <button class="yes-no-button" onclick="toggleObservation('yes')">æ˜¯</button>
 
         </div>
 
@@ -364,9 +364,9 @@
 
         <div class="yes-no-row">
 
-          <span class="label">¬O§_ÁÙ¦³­F­L­nÆ[¹î</span>
+          <span class="label">æ˜¯å¦é‚„æœ‰èƒšèƒè¦è§€å¯Ÿ</span>
 
-          <button class="yes-no-button selected" disabled>§_</button>
+          <button class="yes-no-button selected" disabled>å¦</button>
 
         </div>`;
 
@@ -430,7 +430,7 @@
 
           <div class="followup-row">
 
-            <span class="label">¬O§_­n¦A¦^³ø</span>
+            <span class="label">æ˜¯å¦è¦å†å›å ±</span>
 
             <button class="followup-button" onclick="selectFollowup('Day5')">Day5</button>
 
@@ -438,7 +438,7 @@
 
             <button class="followup-button" onclick="selectFollowup('Day7')">Day7</button>
 
-            <button class="followup-button" onclick="selectFollowup('none')">¤£³ø¤F</button>
+            <button class="followup-button" onclick="selectFollowup('none')">ä¸å ±äº†</button>
 
           </div>`;
 
@@ -448,13 +448,13 @@
 
           <div class="followup-row">
 
-            <span class="label">¬O§_­n¦A¦^³ø</span>
+            <span class="label">æ˜¯å¦è¦å†å›å ±</span>
 
             <button class="followup-button" onclick="selectFollowup('Day6')">Day6</button>
 
             <button class="followup-button" onclick="selectFollowup('Day7')">Day7</button>
 
-            <button class="followup-button" onclick="selectFollowup('none')">¤£³ø¤F</button>
+            <button class="followup-button" onclick="selectFollowup('none')">ä¸å ±äº†</button>
 
           </div>`;
 
@@ -464,11 +464,11 @@
 
           <div class="followup-row">
 
-            <span class="label">¬O§_­n¦A¦^³ø</span>
+            <span class="label">æ˜¯å¦è¦å†å›å ±</span>
 
             <button class="followup-button" onclick="selectFollowup('Day7')">Day7</button>
 
-            <button class="followup-button" onclick="selectFollowup('none')">¤£³ø¤F</button>
+            <button class="followup-button" onclick="selectFollowup('none')">ä¸å ±äº†</button>
 
           </div>`;
 
@@ -492,7 +492,7 @@
 
     document.querySelectorAll('.followup-button').forEach(btn => btn.classList.remove('selected'));
 
-    const btn = Array.from(document.querySelectorAll('.followup-button')).find(b => b.textContent === opt || (opt === 'none' && b.textContent === '¤£³ø¤F'));
+    const btn = Array.from(document.querySelectorAll('.followup-button')).find(b => b.textContent === opt || (opt === 'none' && b.textContent === 'ä¸å ±äº†'));
 
     if (btn) btn.classList.add('selected');
 
@@ -502,7 +502,7 @@
 
   function generateTemplate() {
 
-    if (!selectedDay) return alert('½Ğ¥ı¿ï¾Ü Day3¡ãDay7');
+    if (!selectedDay) return alert('è«‹å…ˆé¸æ“‡ Day3ï½Day7');
 
 
 
@@ -512,7 +512,7 @@
 
     const today = new Date();
 
-    let msg = `±z¦n¡A¤µ¤Ñ¬O­F­L°ö¾iªº²Ä${selectedDay}¤Ñ¡A¹êÅç«Ç©M±z§ó·s­F­Lªºª¬ªp¡G\n`;
+    let msg = `æ‚¨å¥½ï¼Œä»Šå¤©æ˜¯èƒšèƒåŸ¹é¤Šçš„ç¬¬${selectedDay}å¤©ï¼Œå¯¦é©—å®¤å’Œæ‚¨æ›´æ–°èƒšèƒçš„ç‹€æ³ï¼š\n`;
 
 
 
@@ -520,7 +520,7 @@
 
       if (slice > embryo) {
 
-        alert('¤Á¤ùÁû¼Æ¤£±o¤j©ó§N­áÁû¼Æ');
+        alert('åˆ‡ç‰‡é¡†æ•¸ä¸å¾—å¤§æ–¼å†·å‡é¡†æ•¸');
 
         return;
 
@@ -530,27 +530,27 @@
 
       if (embryo === 0) {
 
-        msg += `¥Ø«e©|¥¼¦³­F­L¥i¥H§N­á¡A§Ú­Ì¤@°_¬°­F­LÄ_Ä_¥[ªo¥´®ğ`;
+        msg += `ç›®å‰å°šæœªæœ‰èƒšèƒå¯ä»¥å†·å‡ï¼Œæˆ‘å€‘ä¸€èµ·ç‚ºèƒšèƒå¯¶å¯¶åŠ æ²¹æ‰“æ°£`;
 
       } else {
 
-        msg += `¥Ø«e¦³À°±z\n`;
+        msg += `ç›®å‰æœ‰å¹«æ‚¨\n`;
 
-        if (slice > 0) msg += `¤Á¤ù ${slice} Áû­F­L\n`;
+        if (slice > 0) msg += `åˆ‡ç‰‡ ${slice} é¡†èƒšèƒ\n`;
 
-        msg += `§N­á ${embryo} Áû­F­L`;
+        msg += `å†·å‡ ${embryo} é¡†èƒšèƒ`;
 
 
 
-        const isObserveYes = document.querySelector('.yes-no-button.selected')?.textContent === '¬O';
+        const isObserveYes = document.querySelector('.yes-no-button.selected')?.textContent === 'æ˜¯';
 
-        if (isObserveYes) msg += `\n©|¦³­F­L¤´¦b°ö¾iÆ[¹î¤¤­ò¡I`;
+        if (isObserveYes) msg += `\nå°šæœ‰èƒšèƒä»åœ¨åŸ¹é¤Šè§€å¯Ÿä¸­å”·ï¼`;
 
       }
 
 
 
-      const isObserveNo = document.querySelector('.yes-no-button.selected')?.textContent === '§_';
+      const isObserveNo = document.querySelector('.yes-no-button.selected')?.textContent === 'å¦';
 
       const d = new Date();
 
@@ -560,7 +560,7 @@
 
         d.setDate(today.getDate() + (8 - selectedDay));
 
-        msg += `\n³Ì«áªº§N­áÁû¼Æ¡B­F­Lªºµ¥¯Å©M·Ó¤ù±z¥i©ó ${formatDate(d)} 17:00 «á¡A¦bAPP¤W¬d¸ß¡AÁÂÁÂ±z¡C`;
+        msg += `\næœ€å¾Œçš„å†·å‡é¡†æ•¸ã€èƒšèƒçš„ç­‰ç´šå’Œç…§ç‰‡æ‚¨å¯æ–¼ ${formatDate(d)} 17:00 å¾Œï¼Œåœ¨APPä¸ŠæŸ¥è©¢ï¼Œè¬è¬æ‚¨ã€‚`;
 
       } else if (followupOption?.startsWith('Day')) {
 
@@ -568,7 +568,7 @@
 
         d.setDate(today.getDate() + (followDay - selectedDay));
 
-        msg += `\n§Ú­Ì·|¦b ${formatDate(d)} ¦^³ø±z­F­Lª¬ªp¡A·PÁÂ±zªº­@¤ßµ¥­Ô`;
+        msg += `\næˆ‘å€‘æœƒåœ¨ ${formatDate(d)} å›å ±æ‚¨èƒšèƒç‹€æ³ï¼Œæ„Ÿè¬æ‚¨çš„è€å¿ƒç­‰å€™`;
 
       }
 
@@ -580,19 +580,19 @@
 
       if (embryo > 0) {
 
-        msg += `¥Ø«e¦³À°±z§N­á ${embryo} Áû­F­L`;
+        msg += `ç›®å‰æœ‰å¹«æ‚¨å†·å‡ ${embryo} é¡†èƒšèƒ`;
 
       }
 
-      const isObserveYes = document.querySelector('.yes-no-button.selected')?.textContent === '¬O';
+      const isObserveYes = document.querySelector('.yes-no-button.selected')?.textContent === 'æ˜¯';
 
-      const isObserveNo = document.querySelector('.yes-no-button.selected')?.textContent === '§_';
+      const isObserveNo = document.querySelector('.yes-no-button.selected')?.textContent === 'å¦';
 
 
 
       if (isObserveYes) {
 
-        msg += `\n©|¦³­F­L¤´¦b°ö¾iÆ[¹î¤¤­ò¡I`;
+        msg += `\nå°šæœ‰èƒšèƒä»åœ¨åŸ¹é¤Šè§€å¯Ÿä¸­å”·ï¼`;
 
         if (followupOption?.startsWith('Day')) {
 
@@ -602,13 +602,13 @@
 
           d.setDate(today.getDate() + (followDay - 3));
 
-          msg += `\n§Ú­Ì·|¦b ${formatDate(d)} ¦^³ø±z­F­Lª¬ªp¡A·PÁÂ±zªº­@¤ßµ¥­Ô`;
+          msg += `\næˆ‘å€‘æœƒåœ¨ ${formatDate(d)} å›å ±æ‚¨èƒšèƒç‹€æ³ï¼Œæ„Ÿè¬æ‚¨çš„è€å¿ƒç­‰å€™`;
 
         } else if (followupOption === 'none') {
 
           const d = new Date(); d.setDate(today.getDate() + 5);
 
-          msg += `\n³Ì«áªº§N­áÁû¼Æ¡B­F­Lªºµ¥¯Å©M·Ó¤ù±z¥i©ó ${formatDate(d)} 17:00 «á¡A¦bAPP¤W¬d¸ß¡AÁÂÁÂ±z¡C`;
+          msg += `\næœ€å¾Œçš„å†·å‡é¡†æ•¸ã€èƒšèƒçš„ç­‰ç´šå’Œç…§ç‰‡æ‚¨å¯æ–¼ ${formatDate(d)} 17:00 å¾Œï¼Œåœ¨APPä¸ŠæŸ¥è©¢ï¼Œè¬è¬æ‚¨ã€‚`;
 
         }
 
@@ -620,7 +620,7 @@
 
         const d = new Date(); d.setDate(today.getDate() + 1);
 
-        msg += `\n³Ì«áªº§N­áÁû¼Æ¡B­F­Lªºµ¥¯Å©M·Ó¤ù±z¥i©ó ${formatDate(d)} 17:00 «á¡A¦bAPP¤W¬d¸ß¡AÁÂÁÂ±z¡C`;
+        msg += `\næœ€å¾Œçš„å†·å‡é¡†æ•¸ã€èƒšèƒçš„ç­‰ç´šå’Œç…§ç‰‡æ‚¨å¯æ–¼ ${formatDate(d)} 17:00 å¾Œï¼Œåœ¨APPä¸ŠæŸ¥è©¢ï¼Œè¬è¬æ‚¨ã€‚`;
 
       }
 
@@ -668,7 +668,7 @@
 
     navigator.clipboard.writeText(text).then(() => {
 
-      alert("¤w½Æ»s¼ÒªO¤º®e¡I");
+      alert("å·²è¤‡è£½æ¨¡æ¿å…§å®¹ï¼");
 
     });
 
