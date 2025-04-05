@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>報胚小幫手</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      font-size: 18px;
+    }
+    .day-button, .yes-no-button, .followup-button, .reset-button {
+      padding: 8px 14px;
+      font-size: 18px;
+      cursor: pointer;
+      border: 1px solid #bbb;
+      background-color: #f8f8f8;
+      border-radius: 20px;
+      transition: all 0.2s ease-in-out;
+    }
+    .reset-button {
+      background-color: #e0e0e0;
+    }
+    .generate-button {
+      padding: 12px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 20px;
+      background-color: #f8f8f8;
+      border: 1px solid #bbb;
+      cursor: pointer;
+    }
+    .copy-button {
+      padding: 10px 16px;
+      font-size: 18px;
+      margin-top: 20px;
+      border-radius: 20px;
+      border: 1px solid #bbb;
+      background-color: #eaeaea;
+      cursor: pointer;
+      display: none;
+    }
+    .day-button.selected,
+    .yes-no-button.selected,
+    .followup-button.selected {
+      background-color: #d8a39d;
+      color: white;
+      border-color: #d8a39d;
+    }
+    .line, .yes-no-row, .followup-row {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .label {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    input.count-box {
+      width: 60px;
+      font-size: 18px;
+      text-align: center;
+      border-radius: 10px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      -moz-appearance: textfield;
+    }
+    input.count-box::-webkit-outer-spin-button,
+    input.count-box::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .template-box {
+      margin-top: 20px;
+      font-size: 18px;
+      background: #f9f9f9;
+      padding: 15px;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+      border-radius: 12px;
+    }
+    .button-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h2 style="font-size: 22px; font-weight: bold;">今天日期：<span id="today-date"></span></h2>
+
+<div class="line">
+  <span class="label">今天是</span>
+  <button class="day-button" onclick="selectDay(3)">Day3</button>
+  <button class="day-button" onclick="selectDay(5)">Day5</button>
+  <button class="day-button" onclick="selectDay(6)">Day6</button>
+  <button class="day-button" onclick="selectDay(7)">Day7</button>
+</div>
+
+<div class="output" id="output-text"></div>
+
+<div class="button-row">
+  <button class="generate-button" onclick="generateTemplate()">產出模板</button>
+  <button class="reset-button" onclick="confirmReset()">清空表單</button>
+</div>
+
+
+<script>
+  let selectedDay = null;
+  let followupOption = null;
+
+  window.onload = () => {
+    const today = new Date();
+    const formatted = today.toISOString().split("T")[0];
+    document.getElementById("today-date").innerText = formatted;
+  };
+
+  function confirmReset() {
+    const result = confirm("確認清除表單？");
+    if (result) resetForm();
+  }
+
+  function selectDay(day) {
+    document.querySelectorAll('.day-button').forEach(btn => {
+      btn.classList.toggle('selected', btn.textContent === 'Day' + day);
+    });
+    selectedDay = day;
+    showDay(day);
+  }
+
+  function showDay(day) {
+    followupOption = null;
+    let html = '';
+
+    if ([5, 6, 7].includes(day)) {
+      html += `
+        <div class="line">
+          <span class="label">切片</span>
+          <button onclick="adjustCount('slice-count', -1)">-</button>
+          <input type="text" id="slice-count" class="count-box" value="0">
+          <button onclick="adjustCount('slice-count', 1)">+</button>
+          <span class="label">顆</span>
+        </div>`;
+    }
+
+    html += `
+      <div class="line">
+        <span class="label">冷凍</span>
+        <button onclick="adjustCount('embryo-count', -1)">-</button>
+        <input type="text" id="embryo-count" class="count-box" value="0"
+>
+        <button onclick="adjustCount('embryo-count', 1)">+</button>
+        <span class="label">顆胚胎</span>
+      </div>`;
+
+    if (day !== 7) {
+      html += `
+        <div class="yes-no-row">
+          <span class="label">是否還有胚胎要觀察</span>
+          <button class="yes-no-button" onclick="toggleObservation('no')">否</button>
+          <button class="yes-no-button" onclick="toggleObservation('yes')">是</button>
+        </div>
+        <div id="followup-section"></div>`;
+    } else {
+      html += `
+        <div class="yes-no-row">
+          <span class="label">是否還有胚胎要觀察</span>
+          <button class="yes-no-button selected" disabled>否</button>
+        </div>`;
+    }
+
+    document.getElementById('output-text').innerHTML = html;
+  }
+
+  function adjustCount(id, change) {
+    const input = document.getElementById(id);
+    let val = parseInt(input.value) || 0;
+    val = Math.max(0, Math.min(50, val + change));
+    input.value = val;
+  }
+
+
+  function toggleObservation(type) {
+    document.querySelectorAll('.yes-no-button').forEach(btn => btn.classList.remove('selected'));
+    document.querySelector(`.yes-no-button[onclick*="${type}"]`)?.classList.add('selected');
+
+    const section = document.getElementById('followup-section');
+
+    if (type === 'yes') {
+      if (selectedDay === 3) {
+        section.innerHTML = `
+          <div class="followup-row">
+            <span class="label">是否要再回報</span>
+            <button class="followup-button" onclick="selectFollowup('Day5')">Day5</button>
+            <button class="followup-button" onclick="selectFollowup('Day6')">Day6</button>
+            <button class="followup-button" onclick="selectFollowup('Day7')">Day7</button>
+            <button class="followup-button" onclick="selectFollowup('none')">不報了</button>
+          </div>`;
+      } else if (selectedDay === 5) {
+        section.innerHTML = `
+          <div class="followup-row">
+            <span class="label">是否要再回報</span>
+            <button class="followup-button" onclick="selectFollowup('Day6')">Day6</button>
+            <button class="followup-button" onclick="selectFollowup('Day7')">Day7</button>
+            <button class="followup-button" onclick="selectFollowup('none')">不報了</button>
+          </div>`;
+      } else if (selectedDay === 6) {
+        section.innerHTML = `
+          <div class="followup-row">
+            <span class="label">是否要再回報</span>
+            <button class="followup-button" onclick="selectFollowup('Day7')">Day7</button>
+            <button class="followup-button" onclick="selectFollowup('none')">不報了</button>
+          </div>`;
+      }
+    } else {
+      section.innerHTML = '';
+      followupOption = null;
+    }
+  }
+
+  function selectFollowup(opt) {
+    followupOption = opt;
+    document.querySelectorAll('.followup-button').forEach(btn => btn.classList.remove('selected'));
+    const btn = Array.from(document.querySelectorAll('.followup-button')).find(b => b.textContent === opt || (opt === 'none' && b.textContent === '不報了'));
+    if (btn) btn.classList.add('selected');
+  }
+
+  function generateTemplate() {
+    if (!selectedDay) return alert('請先選擇 Day3～Day7');
+
+    const embryo = parseInt(document.getElementById('embryo-count')?.value) || 0;
+    const slice = parseInt(document.getElementById('slice-count')?.value) || 0;
+    if (slice > embryo) return alert('切片顆數不得大於冷凍顆數');
+
+    const today = new Date();
+    let msg = `您好，今天是胚胎培養的第${selectedDay}天，實驗室和您更新胚胎的狀況：\n`;
+
+    if ([5, 6, 7].includes(selectedDay)) {
+      if (embryo === 0) {
+        msg += "目前尚未有胚胎可以冷凍，我們一起為胚胎寶寶加油打氣";
+      } else {
+        msg += "目前有幫您\n";
+        msg += `冷凍 ${embryo} 顆胚胎`;
+        if (slice > 0) msg += `（${slice} 顆胚胎已切片）`;
+        const isObserveYes = document.querySelector('.yes-no-button.selected')?.textContent === '是';
+        if (isObserveYes) msg += `\n尚有胚胎仍在培養觀察中唷！`;
+      }
+
+      const isObserveNo = document.querySelector('.yes-no-button.selected')?.textContent === '否';
+      const d = new Date();
+      if (isObserveNo || followupOption === 'none' || selectedDay === 7) {
+        d.setDate(today.getDate() + (8 - selectedDay));
+        msg += `\n最後的冷凍顆數、胚胎的等級和照片您可於 ${formatDate(d)} 17:00 後，在APP上查詢，謝謝您。`;
+      } else if (followupOption?.startsWith('Day')) {
+        const followDay = parseInt(followupOption.slice(3));
+        d.setDate(today.getDate() + (followDay - selectedDay));
+        msg += `\n我們會在 ${formatDate(d)} 回報您胚胎狀況，感謝您的耐心等候`;
+      }
+    }
+
+    if (selectedDay === 3) {
+      if (embryo > 0) msg += `目前有幫您冷凍 ${embryo} 顆胚胎`;
+      const isObserveYes = document.querySelector('.yes-no-button.selected')?.textContent === '是';
+      const isObserveNo = document.querySelector('.yes-no-button.selected')?.textContent === '否';
+
+      if (isObserveYes) {
+        msg += `\n尚有胚胎仍在培養觀察中唷！`;
+        if (followupOption?.startsWith('Day')) {
+          const followDay = parseInt(followupOption.slice(3));
+          const d = new Date();
+          d.setDate(today.getDate() + (followDay - 3));
+          msg += `\n我們會在 ${formatDate(d)} 回報您胚胎狀況，感謝您的耐心等候`;
+        } else if (followupOption === 'none') {
+          const d = new Date(); d.setDate(today.getDate() + 5);
+          msg += `\n最後的冷凍顆數、胚胎的等級和照片您可於 ${formatDate(d)} 17:00 後，在APP上查詢，謝謝您。`;
+        }
+      }
+
+      if (isObserveNo) {
+        const d = new Date(); d.setDate(today.getDate() + 1);
+        msg += `\n最後的冷凍顆數、胚胎的等級和照片您可於 ${formatDate(d)} 17:00 後，在APP上查詢，謝謝您。`;
+      }
+    }
+
+    document.getElementById('template-output').innerText = msg.trim();
+    document.getElementById('copy-button').style.display = 'inline-block';
+  }
+
+  function formatDate(date) {
+    return `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
+  }
+
+  function resetForm() {
+    selectedDay = null;
+    followupOption = null;
+    document.getElementById('output-text').innerHTML = '';
+    document.getElementById('template-output').innerText = '';
+    document.getElementById('copy-button').style.display = 'none';
+    document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('selected'));
+  }
+
+  function copyTemplate() {
+    const text = document.getElementById('template-output').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      alert("已複製模板內容！");
+    });
+  }
+</script>
+</body>
+</html>
+
+<div class="template-box" id="template-output"></div>
+<button id="copy-button" class="copy-button" onclick="copyTemplate()">複製模板</button>
