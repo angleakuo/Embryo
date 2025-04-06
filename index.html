@@ -1,113 +1,165 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>報胚小幫手</title>
   <style>
+    :root {
+      --main-bg: #FFFCF5;
+      --main-text: #5C3B1E;
+      --button-bg: #ffe5b4;
+      --button-hover: #fff2cc;
+      --button-selected: #d8a39d;
+      --input-bg: #ffffff;
+      --border-color: #5C3B1E;
+      --text-color: #5C3B1E;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      padding: 30px;
-      font-size: 18px;
+      font-family: "Segoe UI", sans-serif;
+      padding: 20px;
+      font-size: 17px;
+      background-color: var(--main-bg);
+      color: var(--main-text);
     }
-    .day-button, .yes-no-button, .followup-button, .reset-button {
-      padding: 8px 14px;
-      font-size: 18px;
+
+    h2 {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .line,
+    .inline-group,
+    .yes-no-row,
+    .followup-row,
+    .button-row {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nowrap {
+      flex-wrap: nowrap;
+      flex-direction: row;
+      gap: 10px;
+    }
+
+    .inline-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    button {
+      padding: 6px 12px;
+      font-size: 16px;
       cursor: pointer;
-      border: 1px solid #bbb;
-      background-color: #f8f8f8;
       border-radius: 20px;
-      transition: all 0.2s ease-in-out;
+      border: 1px solid var(--border-color);
+      background-color: var(--button-bg);
+      color: var(--text-color);
+      transition: 0.2s;
     }
+
+    button:hover {
+      background-color: var(--button-hover);
+    }
+
+    button.selected {
+      background-color: var(--button-selected);
+      color: white;
+      border-color: var(--button-selected);
+    }
+
+    .generate-button {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
     .reset-button {
       background-color: #e0e0e0;
     }
-    .generate-button {
-      padding: 12px 20px;
-      font-size: 20px;
-      font-weight: bold;
-      border-radius: 20px;
-      background-color: #f8f8f8;
-      border: 1px solid #bbb;
-      cursor: pointer;
-    }
+
     .copy-button {
-      padding: 10px 16px;
-      font-size: 18px;
       margin-top: 20px;
-      border-radius: 20px;
-      border: 1px solid #bbb;
-      background-color: #eaeaea;
-      cursor: pointer;
       display: none;
     }
-    .day-button.selected,
-    .yes-no-button.selected,
-    .followup-button.selected {
-      background-color: #d8a39d;
-      color: white;
-      border-color: #d8a39d;
-    }
-    .line, .yes-no-row, .followup-row {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+
     .label {
-      font-size: 18px;
       font-weight: bold;
+      font-size: 16px;
     }
+
     input.count-box {
-      width: 60px;
-      font-size: 18px;
+      width: 30px;
+      min-width: 30px;
+      max-width: 30px;
+      flex: 0 0 30px;
       text-align: center;
-      border-radius: 10px;
-      padding: 5px;
-      border: 1px solid #ccc;
-      -moz-appearance: textfield;
+      font-size: 16px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 3px;
+      background-color: var(--input-bg);
     }
-    input.count-box::-webkit-outer-spin-button,
-    input.count-box::-webkit-inner-spin-button {
+
+    input.count-box::-webkit-inner-spin-button,
+    input.count-box::-webkit-outer-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
+
     .template-box {
       margin-top: 20px;
-      font-size: 18px;
+      font-size: 17px;
       background: #f9f9f9;
       padding: 15px;
       border: 1px solid #ccc;
       white-space: pre-wrap;
       border-radius: 12px;
     }
-    .button-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 20px;
+
+    @media screen and (max-width: 600px) {
+      .line, .inline-group, .yes-no-row, .followup-row, .button-row {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      button {
+        max-width: 100%;
+      }
+
+      .label {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
 <body>
+  <h2>今天日期：<span id="today-date"></span></h2>
 
-<h2 style="font-size: 22px; font-weight: bold;">今天日期：<span id="today-date"></span></h2>
+  <div class="line nowrap">
+    <span class="label">今天是</span>
+    <button class="day-button" onclick="selectDay(3)">Day3</button>
+    <button class="day-button" onclick="selectDay(5)">Day5</button>
+    <button class="day-button" onclick="selectDay(6)">Day6</button>
+    <button class="day-button" onclick="selectDay(7)">Day7</button>
+  </div>
 
-<div class="line">
-  <span class="label">今天是</span>
-  <button class="day-button" onclick="selectDay(3)">Day3</button>
-  <button class="day-button" onclick="selectDay(5)">Day5</button>
-  <button class="day-button" onclick="selectDay(6)">Day6</button>
-  <button class="day-button" onclick="selectDay(7)">Day7</button>
-</div>
+  <div class="output" id="output-text"></div>
 
-<div class="output" id="output-text"></div>
+  <div class="button-row">
+    <button class="generate-button" onclick="generateTemplate()">產出模板</button>
+    <button class="reset-button" onclick="confirmReset()">清空表單</button>
+  </div>
 
-<div class="button-row">
-  <button class="generate-button" onclick="generateTemplate()">產出模板</button>
-  <button class="reset-button" onclick="confirmReset()">清空表單</button>
-</div>
-
+  <div class="template-box" id="template-output"></div>
+  <button id="copy-button" class="copy-button" onclick="copyTemplate()">複製模板</button>
 
 <script>
   let selectedDay = null;
@@ -136,23 +188,25 @@
     followupOption = null;
     let html = '';
 
+    // 切片：Day5~Day7 才顯示
     if ([5, 6, 7].includes(day)) {
       html += `
-        <div class="line">
+        <div class="inline-group">
           <span class="label">切片</span>
           <button onclick="adjustCount('slice-count', -1)">-</button>
-          <input type="text" id="slice-count" class="count-box" value="0">
+          <input type="text" id="slice-count" class="count-box" value="0" oninput="validateCount('slice-count')">
           <button onclick="adjustCount('slice-count', 1)">+</button>
           <span class="label">顆</span>
-        </div>`;
+        </div>
+        <br>`;
     }
 
+    // 冷凍顯示：所有 Day 都有
     html += `
-      <div class="line">
+      <div class="inline-group">
         <span class="label">冷凍</span>
         <button onclick="adjustCount('embryo-count', -1)">-</button>
-        <input type="text" id="embryo-count" class="count-box" value="0"
->
+        <input type="text" id="embryo-count" class="count-box" value="0" oninput="validateCount('embryo-count')">
         <button onclick="adjustCount('embryo-count', 1)">+</button>
         <span class="label">顆胚胎</span>
       </div>`;
@@ -183,7 +237,16 @@
     input.value = val;
   }
 
+  function validateCount(id) {
+    const input = document.getElementById(id);
+    let val = parseInt(input.value);
+    if (isNaN(val) || val < 0) val = 0;
+    if (val > 50) val = 50;
+    input.value = val;
+  }
+</script>
 
+<script>
   function toggleObservation(type) {
     document.querySelectorAll('.yes-no-button').forEach(btn => btn.classList.remove('selected'));
     document.querySelector(`.yes-no-button[onclick*="${type}"]`)?.classList.add('selected');
@@ -312,6 +375,3 @@
 </script>
 </body>
 </html>
-
-<div class="template-box" id="template-output"></div>
-<button id="copy-button" class="copy-button" onclick="copyTemplate()">複製模板</button>
