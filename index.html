@@ -317,7 +317,7 @@
       const d = new Date();
       if (isObserveNo || followupOption === 'none' || selectedDay === 7) {
         d.setDate(today.getDate() + (8 - selectedDay));
-        msg += `\n最後的冷凍顆數、胚胎的等級和照片您可於 ${formatDate(d)} 17:00 後，在APP上查詢，謝謝您。`;
+        msg += `\n最後的冷凍顆數、胚胎的等級和照片您可於 ${formatDate(d)} 17:00 後在APP上查詢，謝謝您。`;
       } else if (followupOption?.startsWith('Day')) {
         const followDay = parseInt(followupOption.slice(3));
         d.setDate(today.getDate() + (followDay - selectedDay));
@@ -339,13 +339,13 @@
           msg += `\n我們會在 ${formatDate(d)} 回報您胚胎狀況，感謝您的耐心等候`;
         } else if (followupOption === 'none') {
           const d = new Date(); d.setDate(today.getDate() + 5);
-          msg += `\n最後的冷凍顆數、胚胎的等級和照片您可於 ${formatDate(d)} 17:00 後，在APP上查詢，謝謝您。`;
+          msg += `\n最後的冷凍顆數、胚胎的等級和照片您可於 ${formatDate(d)} 17:00 後在APP上查詢，謝謝您。`;
         }
       }
 
       if (isObserveNo) {
         const d = new Date(); d.setDate(today.getDate() + 1);
-        msg += `\n最後的冷凍顆數、胚胎的等級和照片您可於 ${formatDate(d)} 17:00 後，在APP上查詢，謝謝您。`;
+        msg += `\n最後的冷凍顆數、胚胎的等級和照片您可於 ${formatDate(d)} 17:00 後在APP上查詢，謝謝您。`;
       }
     }
 
